@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("/point")
 public class PointController {
 
-    PointService pointService = new PointService();
+    PointService pointService;
 
     public PointController(PointService pointService) {
         this.pointService = pointService;
