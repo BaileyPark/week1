@@ -61,4 +61,5 @@ public class PointController {
     ) {
         return pointService.useById(id, amount);
     }
+
 }
