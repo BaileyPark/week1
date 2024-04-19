@@ -33,15 +33,10 @@ public class PointService {
 
 
     public UserPoint useById(long id, long amount) {
+        boolean isClear = false;
         UserPoint userPoint = userPointTable.selectById(id);
         long point = userPoint.point();
-        if (point < amount) {
-            /*
-            * 예외처리 진행
-            * */
-            System.out.println("lack of points");
-            return userPoint;
-        }
+        if (point < amount) throw new PointException("lack of points"); //예외처리
         pointHistoryTable.insert(id, amount, TransactionType.USE, System.currentTimeMillis());
         point -= amount;
         return userPointTable.insertOrUpdate(id, point);

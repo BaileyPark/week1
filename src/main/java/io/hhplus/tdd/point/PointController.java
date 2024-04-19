@@ -50,7 +50,11 @@ public class PointController {
             @PathVariable long id,
             @RequestBody long amount
     ) {
-        return pointService.chargeById(id, amount);
+        try {
+            return pointService.chargeById(id, amount);
+        } catch (PointException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -61,7 +65,15 @@ public class PointController {
             @PathVariable long id,
             @RequestBody long amount
     ) {
-        return pointService.useById(id, amount);
+        UserPoint userPoint;
+        try {
+            userPoint = pointService.useById(id, amount);
+        } catch (PointException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            throw new PointException(e.getMessage());
+        }
+        return userPoint;
     }
 
 }
